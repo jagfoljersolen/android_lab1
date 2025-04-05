@@ -111,19 +111,56 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+
+        outState.putString("imie", imie.text.toString())
+        outState.putString("nazwisko", nazwisko.text.toString())
+        outState.putString("oceny", oceny.text.toString())
         outState.putBoolean("imieValid", imieValid)
         outState.putBoolean("nazwiskoValid", nazwiskoValid)
         outState.putBoolean("ocenyValid", ocenyValid)
+
+        outState.putString("avgText", avg.text.toString())
+        outState.putInt("avgVisibility", avg.visibility)
+
+        outState.putString("endButtonText", endButton.text.toString())
+        outState.putInt("endButtonVisibility", endButton.visibility)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+
+        imie.setText(savedInstanceState.getString("imie"))
+        nazwisko.setText(savedInstanceState.getString("nazwisko"))
+        oceny.setText(savedInstanceState.getString("oceny"))
         imieValid = savedInstanceState.getBoolean("imieValid")
         nazwiskoValid = savedInstanceState.getBoolean("nazwiskoValid")
         ocenyValid = savedInstanceState.getBoolean("ocenyValid")
         updateButton()
 
+        val avgVisibility = savedInstanceState.getInt("avgVisibility")
+        val endButtonVisibility = savedInstanceState.getInt("endButtonVisibility")
+
+        if (avgVisibility == View.VISIBLE && endButtonVisibility == View.VISIBLE) {
+            avg.text = savedInstanceState.getString("avgText")
+            endButton.text = savedInstanceState.getString("endButtonText")
+            ocenyButton.visibility = View.GONE
+            avg.visibility = View.VISIBLE
+            endButton.visibility = View.VISIBLE
+
+            if (endButton.text == getString(R.string.super_b)) {
+                endButton.setOnClickListener {
+                    Toast.makeText(this, getString(R.string.gratulacje), Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            } else if (endButton.text == getString(R.string.nie_poszlo_b)) {
+                endButton.setOnClickListener {
+                    Toast.makeText(this, getString(R.string.warunek), Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            }
+        }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
