@@ -31,6 +31,14 @@ class SubjectGradeAdapter (private val subjects: List<SubjectGrade>)
         val currentSubject = subjects[position]
         holder.subjectNameTextView.text = currentSubject.subjectName
 
+        when (currentSubject.grade) {
+            0,2 -> holder.gradesRadioGroup.check(R.id.ndst)
+            3 -> holder.gradesRadioGroup.check(R.id.dst)
+            4 -> holder.gradesRadioGroup.check(R.id.db)
+            5 -> holder.gradesRadioGroup.check(R.id.bdb)
+            else -> holder.gradesRadioGroup.clearCheck()
+        }
+
         holder.gradesRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             val selectedGrade = when (checkedId) {
                 R.id.ndst -> 2
@@ -42,6 +50,7 @@ class SubjectGradeAdapter (private val subjects: List<SubjectGrade>)
             currentSubject.grade = selectedGrade
         }
     }
+
 
     override fun getItemCount() = subjects.size
 }

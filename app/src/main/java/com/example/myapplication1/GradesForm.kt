@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Intent
 
-
 class GradesForm : AppCompatActivity() {
 
     private lateinit var avgButton: Button
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var subjectsList: MutableList<SubjectGrade>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +21,9 @@ class GradesForm : AppCompatActivity() {
 
         val subjectsArray = resources.getStringArray(R.array.subjects)
 
-        val subjectsList = subjectsArray.take(oceny).map { SubjectGrade(it) }
+        subjectsList = subjectsArray.take(oceny).map { SubjectGrade(it) }.toMutableList()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.subjectsRecyclerView)
+        recyclerView = findViewById(R.id.subjectsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = SubjectGradeAdapter(subjectsList)
 
@@ -39,4 +40,23 @@ class GradesForm : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val gradesArray = subjectsList.map { it.grade }.toIntArray()
+        outState.putIntArray("grades", gradesArray)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val restoredGrades = savedInstanceState.getIntArray("grades")
+        if (restoredGrades != null) {
+            for (i in subjectsList.indices) {
+                subjectsList[i].grade = restoredGrades[i]
+            }
+
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+    }
 }
