@@ -140,6 +140,7 @@ class MainActivity : AppCompatActivity() {
 
                     endButton.setOnClickListener {
                         Toast.makeText(this,getString(R.string.gratulacje), Toast.LENGTH_LONG).show()
+                        finish()
                     }
                 }else{
                     endButton.text = getString(R.string.nie_poszlo_b)
@@ -147,6 +148,7 @@ class MainActivity : AppCompatActivity() {
 
                     endButton.setOnClickListener {
                         Toast.makeText(this,getString(R.string.warunek), Toast.LENGTH_LONG).show()
+                        finish()
                     }
                 }
             }

@@ -20,4 +20,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/calculate_avg"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
