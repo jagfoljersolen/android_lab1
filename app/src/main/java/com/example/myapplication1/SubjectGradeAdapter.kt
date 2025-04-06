@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 data class SubjectGrade (
     var subjectName : String,
-    var grade : Int = 0
+    var grade : Int = 2
 )
 class SubjectGradeAdapter (private val subjects: List<SubjectGrade>)
     : RecyclerView.Adapter<SubjectGradeAdapter.SubjectGradeViewHolder>()
@@ -32,7 +32,7 @@ class SubjectGradeAdapter (private val subjects: List<SubjectGrade>)
         holder.subjectNameTextView.text = currentSubject.subjectName
 
         when (currentSubject.grade) {
-            0,2 -> holder.gradesRadioGroup.check(R.id.ndst)
+            2 -> holder.gradesRadioGroup.check(R.id.ndst)
             3 -> holder.gradesRadioGroup.check(R.id.dst)
             4 -> holder.gradesRadioGroup.check(R.id.db)
             5 -> holder.gradesRadioGroup.check(R.id.bdb)
@@ -45,7 +45,7 @@ class SubjectGradeAdapter (private val subjects: List<SubjectGrade>)
                 R.id.dst -> 3
                 R.id.db -> 4
                 R.id.bdb -> 5
-                else -> 0
+                else -> 2
             }
             currentSubject.grade = selectedGrade
         }
